@@ -11,7 +11,7 @@ int n,m,opt;
 int main()
 {
 	freopen("c.in","w",stdout);
-	n=10000,m=10,opt=0;
+	n=100000,m=50,opt=0;
 	printf("%d %d %d\n",n,m,opt);
 	for(int i=1;i<=n;i++)
 		printf("%d %d\n",(int)(rnd()%mod),(int)(rnd()%mod));
