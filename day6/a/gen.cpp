@@ -13,7 +13,7 @@ vector<int> s[2000009];
 int main()
 {
 	freopen("a.in","w",stdout);
-	int n=2000000,k=1000,m=100000;
+	int n=200000,k=1000,m=200000;
 	printf("%d %d\n",n,k);
 	for(int i=1;i<=m;i++)
 	{
@@ -22,7 +22,9 @@ int main()
 	}
 	for(int i=1;i<=n;i++)
 	{
-		printf("%d %d ",(int)s[i].size(),(int)(rnd()%mx+1)*0);
+		s[i].pb(rnd()%mx);
+		printf("%d ",(int)s[i].size()-1);
+		sort(s[i].begin(),s[i].end());
 		for(int j=0;j<(int)s[i].size();j++)
 			printf("%d ",s[i][j]);
 		printf("\n");

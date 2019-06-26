@@ -60,7 +60,7 @@ int main()
 {
 #ifdef I_LOVE_KTY
 	freopen("a.in","r",stdin);
-	freopen("a1.out","w",stdout);
+	freopen("a.out","w",stdout);
 #endif
 	rd(n),rd(m);
 	// printf("n:%d m:%d\n",n,m);
