@@ -9,7 +9,7 @@ mt19937 rnd(sd());
 int main()
 {
 	freopen("a.in","w",stdout);
-	int n=100000,m=500;
+	int n=10000,m=500;
 	printf("%d %d\n",n,m);
 	for(int i=2;i<=n;i++)
 		printf("%d %d\n",i,(int)(rnd()%(i-1)+1));
