@@ -34,11 +34,11 @@ int dfs(int x)
 }
 int check(int x)
 {
-	if(tot%x)
-		return 0;
-	int tv=tot/x;
+	// if(tot%x)
+	// 	return 0;
+	// int tv=tot/x;
 	for(int s=1;s<1<<n;s++)
-		if(sm[s]==(li)(cnt[s]==1?1:cnt[s]-1)*tv)
+		if((li)sm[s]*x==(li)(cnt[s]==1?1:cnt[s]-1)*tot)
 			f[s]=1;
 		else
 			f[s]=0;
