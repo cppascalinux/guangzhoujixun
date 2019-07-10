@@ -21,7 +21,6 @@ signed main()
 		scanf("%lld%lld",&a,&b);
 		if(a==1)
 		{
-			// assert(b<=c);
 			scanf("%lld",&c);
 			l[++cnt]=b;
 			r[cnt]=c;
@@ -30,22 +29,14 @@ signed main()
 		{
 			if(b+1<=cnt)
 				ban[b+1]=1;
-			// assert(b+1<=cnt);
 		}
 		else
 		{
 			scanf("%lld",&c);
 			li ans=-1;
-			// assert(b<=c);
-			if(b>c)
-			{
-				printf("-1");
-				continue;
-			}
 			for(int j=1;j<=cnt;j++)
 				if(!ban[j]&&l[j]<b&&r[j]>c)
 					ans=max(ans,(li)((li)b-l[j])*((li)r[j]-c));
-			assert(ans>=-1);
 			printf("%lld\n",ans);
 		}	
 	}
