@@ -1,7 +1,7 @@
 i=1
 while true; do
-	./gen;./b1;./b
-	if diff b.out b1.out; then
+	./gen;./b2;./b
+	if diff b.out b2.out; then
 		echo $i
 	else
 		exit 0

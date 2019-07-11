@@ -80,7 +80,7 @@ int main()
 {
 #ifdef I_LOVE_KTY
 	freopen("b.in","r",stdin);
-	freopen("b1.out","w",stdout);
+	freopen("b.out","w",stdout);
 #endif
 	scanf("%d",&n);
 	scanf("%s",s+1);

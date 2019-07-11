@@ -7,21 +7,96 @@
 #include<cstdio>
 #include<cstring>
 #include<algorithm>
+#include<cassert>
+#define inf 0x7F7F7F7F
 using namespace std;
-int n,sm0,sm1,sm2;
+int n,sm[3],out=inf;
 char s[6009],ns[6009];
 int cl[6009];
+int sf[6009],pre[6009][3],nxt[6009][3];
 void solve(int x)//sum of color 2 is x
 {
-	memcpy(s,ns,(n+1)<<2);
-	int sz0=0,sz1=0,sz2=0;
+	memcpy(s,ns,n+1);
+	int sz[3]={0,0,0};
 	for(int i=1;i<=n;i++)
-		if(cl[i]==0)
-			sz0+=s[i];
-		else if(cl[i]==1)
-			sz1+=s[i];
-		else	
-			sz2+=s[i];
+		sz[cl[i]]+=s[i];
+	// printf("x:%d sz0:%d sz1:%d sz2:%d\n",x,sz[0],sz[1],sz[2]),fflush(stdout);
+	int ans=0;
+	for(int k=0;k<=2;k++)
+	{
+		int t=k==2?x:-x;
+		for(int i=1;i<=n&&sz[k]<t;i++)
+			if(cl[i]==k&&s[i]==-1)
+				sz[k]+=2,s[i]=1,ans++;
+		for(int i=n;i>=1&&sz[k]>t;i--)
+			if(cl[i]==k&&s[i]==1)
+				sz[k]-=2,s[i]=-1,ans++;
+	}
+	if(ans>=out)
+		return;
+	// assert(sz[0]==-x),assert(sz[1]==-x),assert(sz[2]==x);
+	// for(int i=1;i<=n;i++)
+	// 	printf("%d ",s[i]);
+	// printf("\n"),fflush(stdout);
+	int c0=0,c1=0,c2=0,c3=0,c4=0;//r,g,b,r+b,g+b
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=0;j<=2;j++)
+			pre[i][j]=pre[i-1][j];
+		if(s[i]==-1)
+			pre[i][cl[i]]++;
+	}
+	for(int i=n;i>=1;i--)
+	{
+		for(int j=0;j<=2;j++)
+			nxt[i][j]=nxt[i+1][j];
+		if(s[i]==1)
+			nxt[i][cl[i]]++;
+	}
+	//0 and 2
+	for(int i=1;i<=n;i++)
+	{
+		sf[i]=sf[i-1];
+		if(cl[i]!=1)
+		{
+			sf[i]+=s[i];
+			if(sf[i]<0)
+			{
+				int t=(-sf[i]+1)>>1;
+				int v0=min(pre[i][0],nxt[i+1][0]);
+				int v2=min(pre[i][2],nxt[i+1][2]);
+				if(v0+v2<t)
+					return;
+				// printf("i:%d v0:%d v2:%d t:%d\n",i,v0,v2,t),fflush(stdout);
+				c0=max(c0,t-v2);
+				c2=max(c2,t-v0);
+				c3=max(c3,t);
+			}
+		}
+	}
+	//1 and 2
+	for(int i=1;i<=n;i++)
+	{
+		sf[i]=sf[i-1];
+		if(cl[i]!=0)
+		{
+			sf[i]+=s[i];
+			if(sf[i]<0)
+			{
+				int t=(-sf[i]+1)>>1;
+				int v1=min(pre[i][1],nxt[i+1][1]);
+				int v2=min(pre[i][2],nxt[i+1][2]);
+				if(v1+v2<t)
+					return;
+				c1=max(c1,t-v2);
+				c2=max(c2,t-v1);
+				c4=max(c4,t);
+			}
+		}
+	}
+	// printf("c0:%d c1:%d c2:%d c3:%d c4:%d\n",c0,c1,c2,c3,c4);
+	ans+=2*max(c0+c1+c2,max(c0+c4,c1+c3));
+	out=min(out,ans);
 }
 int main()
 {
@@ -35,14 +110,13 @@ int main()
 	for(int i=1;i<=n;i++)
 	{
 		scanf("%d",cl+i);
-		sm0+=(cl[i]==0);
-		sm1+=(cl[i]==1);
-		sm2+=(cl[i]==2);
+		sm[cl[i]]++;
 	}
-	if((sm0&1)!=(sm1&1)||(sm1&1)!=(sm2&1))
+	if((sm[0]&1)!=(sm[1]&1)||(sm[1]&1)!=(sm[2]&1))
 		return printf("-1"),0;
-	int st=min(sm0,min(sm1,sm2));
+	int st=min(sm[0],min(sm[1],sm[2]));
 	for(int i=-st;i<=st;i+=2)
 		solve(i);
+	printf("%d",out>=inf?-1:out);
 	return 0;
 }
