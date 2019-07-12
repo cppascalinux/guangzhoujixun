@@ -80,10 +80,12 @@ void initl()
 			st[++tp]=node(i,i+le,1);
 		len[i]=st[tp].r-st[tp].l+1,rep[i]=st[tp].tm;
 	}
+	// for(int i=1;i<=n;i++)
+	// 	printf("i:%d| len:%d| rep:%d\n",i,len[i],rep[i]);
 }
 void ask(int l,int k)
 {
-	if(rep[l]%k==0)
+	if(rep[l]%k==0&&rep[l]*len[l]!=(n-l+1))
 	{
 		int lp=l+len[l]*(rep[l]-rep[l]/k);
 		printf("%d %d\n",lp,n);
